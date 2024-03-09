@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import TournamentGenerator from '../src/tournamentGenerator.js';
 
 describe('TournamentGenerator', () => {
-    it('devrait générer des poules avec le nombre correct de teams', () => {
+    it('devrait générer des poules avec le nombre correct de teams quand le nombre d\'équipe est pair', () => {
         // Préparer une liste fictive d'équipes
         const teams = [
             {name: 'Équipe 1', players: ['Joueur 1', 'Joueur 2', 'Joueur 3']},
