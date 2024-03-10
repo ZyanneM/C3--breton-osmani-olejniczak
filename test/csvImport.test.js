@@ -8,6 +8,21 @@ describe('CSVReader', () => {
     it("devrait lire le fichier CSV et retourner les données sous forme d'un tableau d'objets", (done) => {
       const filePath = path.resolve(__dirname, '../src/test.csv');
       const csvReader = new CSVReader(filePath);
+
+      const expectedPlayers = [
+        { nom: 'Uzumaki', prenom: 'Naruto' },
+        { nom: 'Uchiha', prenom: 'Sasuke' },
+        { nom: 'Haruno', prenom: 'Sakura' },
+        { nom: 'Hatake', prenom: 'Kakashi' },
+        { nom: 'Nara', prenom: 'Shikamaru' },
+        { nom: 'Hyuga', prenom: 'Hinata' },
+        { nom: 'Hyuga', prenom: 'Neji' },
+        { nom: 'Lee', prenom: 'Rock' },
+        { nom: 'Tenten', prenom: '' },
+        { nom: 'Yamanaka', prenom: 'Ino' },
+        { nom: 'Akimichi', prenom: 'Choji' },
+        { nom: 'Inuzuka', prenom: 'Kiba' }
+      ];
     });
 });
 });
