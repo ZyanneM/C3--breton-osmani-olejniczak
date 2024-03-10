@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {exportToCSV,} from '../src/csvExport.js';
+import {exportToCSV, saveCSVtoTempFolder} from '../src/csvExport.js';
+import fs from 'fs';
 
 describe('CSV Exporter', () => {
     it('devrait exporter des données CSV correctes', () => {
