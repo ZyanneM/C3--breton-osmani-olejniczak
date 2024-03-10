@@ -10,6 +10,12 @@ async function importCSV(filePath) {
   try {
     const csvReader = new CSVReader(filePath);
     const data = await csvReader.readCSV();
+
+    if (data.length === 0) {
+        console.log('Pas de données dans le fichier CSV.');
+        return [];
+      }
+
     return data;
   } catch (error) {
     throw new Error(`Erreur lors de l'import du fichier CSV : ${error.message}`);
