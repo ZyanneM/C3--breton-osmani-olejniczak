@@ -7,5 +7,9 @@ describe('TeamGenerator', () => {
     const playersPerTeam = 3;
     const teamGenerator = new TeamGenerator(players, playersPerTeam);
     teamGenerator.generateTeams();
+
+    const teams = teamGenerator.getTeams();
+
+    expect(teams.length).to.equal(Math.ceil(players.length / playersPerTeam));
   });
 });
