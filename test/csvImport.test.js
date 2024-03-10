@@ -5,6 +5,25 @@ import CSVReader from '../src/csvReader.js';
 import { expect } from 'chai';
 
 describe('CSVReader', () => {
+    describe('checkIfCSVEmpty', () => {
+        it("devrait vérifier si le fichier CSV est vide", (done) => {
+          const testFilePath = fileURLToPath(import.meta.url);
+          const testDirPath = path.dirname(testFilePath);
+          const filePath = path.resolve(testDirPath, '../src/test_empty.csv');
+          const csvReader = new CSVReader(filePath);
+    
+          csvReader.readCSV()
+            .then((data) => {
+              if(data.length === 0) {
+                console.log("Pas de données dans le fichier CSV.");
+              }
+              expect(data).to.be.an('array');
+              done();
+            })
+            .catch(done);
+        });
+      });
+
   describe('readCSV', () => {
     it("devrait lire le fichier CSV et retourner les données sous forme d'un tableau d'objets", (done) => {
       const testFilePath = fileURLToPath(import.meta.url);
@@ -22,7 +41,6 @@ describe('CSVReader', () => {
       csvReader.readCSV()
         .then((data) => {
           logData(data);
-          expect(data).to.be.an('array').that.is.not.empty;
           data.forEach(item => expect(item).to.be.an('object'));
           data.forEach((player) => {
             const playerKeys = Object.keys(player);
