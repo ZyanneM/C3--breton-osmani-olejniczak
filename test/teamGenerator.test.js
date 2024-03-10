@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import TeamGenerator from '../src/teamGenerator';
+import TeamGenerator from '../src/teamGenerator.js';
 
 describe('TeamGenerator', () => {
   it('Devrait générer les équipes avec le bon nombre de joueurs dans chaque équipe', () => {
