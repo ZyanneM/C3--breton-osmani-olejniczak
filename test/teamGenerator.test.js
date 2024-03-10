@@ -11,5 +11,9 @@ describe('TeamGenerator', () => {
     const teams = teamGenerator.getTeams();
 
     expect(teams.length).to.equal(Math.ceil(players.length / playersPerTeam));
+
+    teams.forEach(team => {
+        expect(team.players.length).to.equal(playersPerTeam);
+      });
   });
 });
