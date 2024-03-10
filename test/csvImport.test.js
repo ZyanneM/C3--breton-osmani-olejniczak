@@ -1,12 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import CSVReader from '../src/csvReader'; 
+import { fileURLToPath } from 'url';
+import CSVReader from '../src/csvReader.js'; 
 import { expect } from 'chai';
 
 describe('CSVReader', () => {
   describe('readCSV', () => {
     it("devrait lire le fichier CSV et retourner les données sous forme d'un tableau d'objets", (done) => {
-      const filePath = path.resolve(__dirname, '../src/test.csv');
+        const testFilePath = fileURLToPath(import.meta.url);
+        const testDirPath = path.dirname(testFilePath);
+        const filePath = path.resolve(testDirPath, '../src/test.csv');
       const csvReader = new CSVReader(filePath);
 
       const expectedPlayers = [
@@ -24,8 +27,14 @@ describe('CSVReader', () => {
         { nom: 'Inuzuka', prenom: 'Kiba' }
       ];
 
+      function logData(data) {
+        console.log("Données lues à partir du fichier CSV :");
+        data.forEach(player => console.log(player));
+      }
+
       csvReader.readCSV()
       .then((data) => {
+        logData(data);
         expect(data).to.be.an('array').that.is.not.empty;
         data.forEach(item => expect(item).to.be.an('object'));
         data.forEach((player, index) => {
