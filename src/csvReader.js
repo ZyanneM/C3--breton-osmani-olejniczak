@@ -1,24 +1,26 @@
-import fs from 'fs';
-import csv from 'csv-parser';
+import path from 'path';
+import CSVReader from '../src/csvReader.js'; 
 
-class CSVReader {
-  constructor(filePath) {
-    this.filePath = filePath;
-    this.data = [];
-  }
-
-  readCSV() {
-    return new Promise((resolve, reject) => {
-      fs.createReadStream(this.filePath)
-        .pipe(csv())
-        .on('data', (row) => this.data.push(row))
-        .on('end', () => {
-          console.log('CSV file successfully processed');
-          resolve(this.data);
-        })
-        .on('error', (error) => reject(error));
-    });
+/**
+ * Fonction pour importer un fichier CSV et retourner les données sous forme d'un tableau d'objets.
+ * @param {string} filePath - Le chemin du fichier CSV à importer.
+ * @returns {Promise<Array>} Une promesse résolue avec les données lues du fichier CSV.
+ */
+async function importCSV(filePath) {
+  try {
+    const csvReader = new CSVReader(filePath);
+    const data = await csvReader.readCSV();
+    return data;
+  } catch (error) {
+    throw new Error(`Erreur lors de l'import du fichier CSV : ${error.message}`);
   }
 }
 
-export default CSVReader
+const filePath = path.resolve(__dirname, '../src/test.csv');
+importCSV(filePath)
+  .then((data) => {
+    console.log('Données lues à partir du fichier CSV :', data);
+  })
+  .catch((error) => {
+    console.error('Erreur lors de l\'import du fichier CSV :', error);
+  });
