@@ -27,6 +27,7 @@ describe('CSVReader', () => {
       csvReader.readCSV()
       .then((data) => {
         expect(data).to.be.an('array').that.is.not.empty;
+        data.forEach(item => expect(item).to.be.an('object'));
         done();
       })
       .catch(done);
