@@ -28,6 +28,9 @@ describe('CSVReader', () => {
       .then((data) => {
         expect(data).to.be.an('array').that.is.not.empty;
         data.forEach(item => expect(item).to.be.an('object'));
+        data.forEach((player, index) => {
+            expect(player).to.deep.equal(expectedPlayers[index]);
+          });
         done();
       })
       .catch(done);
