@@ -23,6 +23,13 @@ describe('CSVReader', () => {
         { nom: 'Akimichi', prenom: 'Choji' },
         { nom: 'Inuzuka', prenom: 'Kiba' }
       ];
-    });
+
+      csvReader.readCSV()
+      .then((data) => {
+        expect(data).to.be.an('array').that.is.not.empty;
+        done();
+      })
+      .catch(done);
+  });
 });
 });
