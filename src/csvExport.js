@@ -1,27 +1,32 @@
-const fs = import('fs');
-const path = import('path');
+import fs from 'fs';
+import path from 'path';
+
 function exportToCSV(data) {
-    // En-tête du CSV
     const header = Object.keys(data[0]).join(',');
-
-    // Contenu du CSV
     const csvData = data.map(row => Object.values(row).map(value => `"${value}"`).join(',')).join('\n');
-
     return `${header}\n${csvData}`;
 }
-function saveCSVtoTempFolder(data, fileName) {
-    const tempFolderPath = './temp';
 
-    if (!fs.existsSync(tempFolderPath)) {
+async function saveCSVtoTempFolder(data, fileName) {
+    const tempFolderPath = './temp';  // Spécifiez directement le chemin du dossier temporaire
+
+    try {
+        await fs.promises.access(tempFolderPath, fs.constants.F_OK); // Vérifiez si le dossier existe
+    } catch (err) {
         fs.mkdirSync(tempFolderPath);
     }
 
     const filePath = path.join(tempFolderPath, fileName + '.csv');
-    const csvData = exportToCSV(data);
 
-    fs.writeFileSync(filePath, csvData);
-    console.log(`Fichier CSV exporté et enregistré dans le dossier temporaire : ${filePath}`);
-    return filePath;
+    try {
+        await fs.promises.access(filePath, fs.constants.F_OK); // Vérifiez si le fichier existe
+        console.error('Le fichier existe déjà');
+        return null;  // Ou une autre logique pour gérer le cas où le fichier existe déjà
+    } catch (err) {
+        fs.writeFileSync(filePath, exportToCSV(data));
+        console.log(`Fichier CSV exporté et enregistré dans le dossier temporaire : ${filePath}`);
+        return filePath;
+    }
 }
 
 export { exportToCSV, saveCSVtoTempFolder };
